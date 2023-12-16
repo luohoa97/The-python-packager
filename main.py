@@ -10,10 +10,8 @@ class Worker(QObject):
 
     def run(self):
         try:
-            # Run pip list command
             pip_list_output = subprocess.check_output([sys.executable, '-m', 'pip', 'list']).decode('utf-8')
 
-            # Extract package names
             packages = [line.split(' ')[0] for line in pip_list_output.split('\n')[2:] if line]
 
             self.result_signal.emit(packages)
@@ -98,7 +96,7 @@ class PackageExplorer(QMainWindow):
         if current_item is not None:
             selected_package = current_item.text()
 
-            # Prompt user for delete or uninstall
+            # Delete?
             choice = self.delete_option_prompt()
 
             if choice == "Delete":
